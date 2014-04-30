@@ -129,7 +129,7 @@ class Grid:
 			printStr = ""
 		print ""
 
-""" Test code
+'''Test code
 def main():
 	grid = Grid()
 
@@ -178,3 +178,4 @@ def main():
 
 if __name__ == "__main__":
 	main()
+'''
