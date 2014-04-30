@@ -51,8 +51,6 @@ class Grid:
 	# Returns a copy of the Grid Class in the
 	# indicated tilt direction
 	def tilt(self, direction):
-		#self.__gridClass = copy.deepcopy(self)
-
 		if (direction == "up"):
 			i_inc = -1
 			i_start = 0
@@ -119,6 +117,8 @@ class Grid:
 
 						elif (self.__grid[next_i][next_j] ==
 								self.__grid[curr_i][curr_j]):
+							# Makes it negative so that it tile
+							# combinations don't skip turns
 							self.__grid[next_i][next_j] = (self.__grid[curr_i][curr_j] * -2)
 							self.__grid[curr_i][curr_j] = 0
 							done = True
