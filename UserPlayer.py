@@ -8,7 +8,7 @@ class UserPlayer:
 	# prompts for a tile direction
 	# and performs it.
 	def makeMove(self, grid):
-		direction = input("up, down, left, right?: ")
+		direction = raw_input("up, down, left, right?: ")
 		return grid.tilt(direction)
 
 ''' Test Code
