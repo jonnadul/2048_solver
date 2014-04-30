@@ -1,4 +1,5 @@
 import copy
+import math
 
 GRID_SIZE = 4
 
@@ -27,7 +28,7 @@ class Grid:
 
 	# Sets the private grid variable
 	def setGrid(self, grid):
-		self.__grid = copy.deepcopy(grid)
+		self.__grid = copy.copy(grid)
 
 	# Checks if a certain value is in
 	# the grid
@@ -97,7 +98,7 @@ class Grid:
 		
 		for i in range(i_start, i_stop, i_step):
 			for j in range(j_start, j_stop, j_step):
-				if self.__grid[i][j] != 0:
+				if (self.__grid[i][j] != 0):
 					curr_i = i
 					curr_j = j
 
@@ -108,16 +109,19 @@ class Grid:
 					while ((not done) and
 						((next_i >= 0) and (next_i < GRID_SIZE)) and
 						((next_j >= 0) and (next_j < GRID_SIZE))):
+
 						if (self.__grid[next_i][next_j] == 0):
 							self.__grid[next_i][next_j] = self.__grid[curr_i][curr_j]
 							self.__grid[curr_i][curr_j] = 0
 
 						elif (self.__grid[next_i][next_j] ==
-							self.__grid[curr_i][curr_j]):
-							self.__grid[next_i][next_j] = (self.__grid[curr_i][curr_j] * 2)
+								self.__grid[curr_i][curr_j]):
+							self.__grid[next_i][next_j] = (self.__grid[curr_i][curr_j] * -2)
 							self.__grid[curr_i][curr_j] = 0
+							done = True
 
 						else:
+							self.setGrid(self.__grid)
 							done = True
 					
 						if (not done):
@@ -126,6 +130,11 @@ class Grid:
 
 							next_i = curr_i + i_inc
 							next_j = curr_j + j_inc
+		
+		for i in range(GRID_SIZE):
+			for j in range(GRID_SIZE):
+				if (self.__grid[i][j] < 0):
+					self.__grid[i][j] = self.__grid[i][j] * -1
 
 	# Prints Grid
 	def printGrid(self):
@@ -137,54 +146,31 @@ class Grid:
 			printStr = ""
 		print ""
 
-''' Test Code
+	def printGridThis(self, grid):
+		printStr = ""
+		for i in range(GRID_SIZE):
+			for j in range(GRID_SIZE):
+				printStr += str(grid[i][j]) + "\t"
+			print printStr
+			printStr = ""
+		print ""
+
+''' Test code
 def main():
 	grid = Grid()
 
-	grid.addTile(4, 1, 0)
+	grid.addTile(2, 0, 0)
+	grid.addTile(2, 1, 0)
 	grid.addTile(4, 3, 0)
-	grid.addTile(4, 1, 2)
-	grid.addTile(4, 3, 2)
 
 	grid.printGrid()
 
 	grid.tilt("up")
-
-	grid.printGrid()
-
-	grid.tilt("down")
-
-	grid.printGrid()
-
-	grid.tilt("left")
-
-	grid.printGrid()
-
-	grid.tilt("right")
-
-	grid.printGrid()
-	
-	grid.tilt("down")
-
-	grid.printGrid()
-	
-	grid.addTile(4, 1, 0)
-	grid.addTile(4, 3, 0)
-	grid.addTile(4, 1, 2)
-	grid.addTile(4, 3, 2)
 	
 	grid.printGrid()
+
+	grid.tilt("up")
 	
-	grid.tilt("left")
-
-	grid.printGrid()
-
-	grid.tilt("right")
-
-	grid.printGrid()
-
-	grid.clearGrid()
-
 	grid.printGrid()
 
 if __name__ == "__main__":

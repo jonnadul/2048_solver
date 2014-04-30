@@ -4,6 +4,7 @@ from random import Random
 GRID_SIZE = 4
 
 class GamePlayer:
+	# Constructor
 	def __init__(self):
 		self.__rand = Random()
 	
