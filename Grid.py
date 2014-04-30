@@ -1,4 +1,3 @@
-from collections import deque
 import copy
 
 GRID_SIZE = 4
@@ -7,17 +6,20 @@ class Grid:
 	# Constructor
 	def __init__(self):
 		self.__grid = [[0 for i in range(GRID_SIZE)] for j in range(GRID_SIZE)]
-		self.__numItems = 0
 
 	# Adds a new tile at
 	# row i, col j
 	def addTile(self, tileValue, i, j):
 		if (((i >= 0) and (i < GRID_SIZE)) and
-			((j >= 0) and (j < GRID_SIZE))):
+			((j >= 0) and (j < GRID_SIZE)) and
+			(self.__grid[i][j] == 0)):
 			self.__grid[i][j] = tileValue
 			return True 
 		else:
 			return False
+
+	def clearGrid(self):
+		self.__grid = [[0 for i in range(GRID_SIZE)] for j in range(GRID_SIZE)]
 
 	# Returns the private grid variable
 	def getGrid(self):
@@ -26,9 +28,19 @@ class Grid:
 	# Sets the private grid variable
 	def setGrid(self, grid):
 		self.__grid = copy.deepcopy(grid)
-	
+
+	# Checks if a certain value is in
+	# the grid
+	def gridContains(self, value):
+		for i in range(GRID_SIZE):
+			for j in range(GRID_SIZE):
+				if (self.__grid[i][j] == value):
+					return True
+
+		return False
+
 	# Checks if the grid is full
-	def isFull(self, grid):
+	def isFull(self):
 		for i in range(GRID_SIZE):
 			for j in range(GRID_SIZE):
 				if (self.__grid[i][j] == 0):
@@ -38,8 +50,7 @@ class Grid:
 	# Returns a copy of the Grid Class in the
 	# indicated tilt direction
 	def tilt(self, direction):
-		retGridClass = copy.deepcopy(self)
-		retGrid = retGridClass.getGrid()
+		#self.__gridClass = copy.deepcopy(self)
 
 		if (direction == "up"):
 			i_inc = -1
@@ -86,7 +97,7 @@ class Grid:
 		
 		for i in range(i_start, i_stop, i_step):
 			for j in range(j_start, j_stop, j_step):
-				if retGrid[i][j] != 0:
+				if self.__grid[i][j] != 0:
 					curr_i = i
 					curr_j = j
 
@@ -97,14 +108,14 @@ class Grid:
 					while ((not done) and
 						((next_i >= 0) and (next_i < GRID_SIZE)) and
 						((next_j >= 0) and (next_j < GRID_SIZE))):
-						if (retGrid[next_i][next_j] == 0):
-							retGrid[next_i][next_j] = retGrid[curr_i][curr_j]
-							retGrid[curr_i][curr_j] = 0
+						if (self.__grid[next_i][next_j] == 0):
+							self.__grid[next_i][next_j] = self.__grid[curr_i][curr_j]
+							self.__grid[curr_i][curr_j] = 0
 
-						elif (retGrid[next_i][next_j] ==
-							retGrid[curr_i][curr_j]):
-							retGrid[next_i][next_j] = (retGrid[curr_i][curr_j] * 2)
-							retGrid[curr_i][curr_j] = 0
+						elif (self.__grid[next_i][next_j] ==
+							self.__grid[curr_i][curr_j]):
+							self.__grid[next_i][next_j] = (self.__grid[curr_i][curr_j] * 2)
+							self.__grid[curr_i][curr_j] = 0
 
 						else:
 							done = True
@@ -115,21 +126,18 @@ class Grid:
 
 							next_i = curr_i + i_inc
 							next_j = curr_j + j_inc
-		
-		retGridClass.setGrid(retGrid)
-		return retGridClass
 
 	# Prints Grid
 	def printGrid(self):
 		printStr = ""
 		for i in range(GRID_SIZE):
 			for j in range(GRID_SIZE):
-				printStr += str(self.__grid[i][j]) + " "
+				printStr += str(self.__grid[i][j]) + "\t"
 			print printStr
 			printStr = ""
 		print ""
 
-'''Test code
+''' Test Code
 def main():
 	grid = Grid()
 
@@ -140,23 +148,23 @@ def main():
 
 	grid.printGrid()
 
-	grid = grid.tilt("up")
+	grid.tilt("up")
 
 	grid.printGrid()
 
-	grid = grid.tilt("down")
+	grid.tilt("down")
 
 	grid.printGrid()
 
-	grid = grid.tilt("left")
+	grid.tilt("left")
 
 	grid.printGrid()
 
-	grid = grid.tilt("right")
+	grid.tilt("right")
 
 	grid.printGrid()
 	
-	grid = grid.tilt("down")
+	grid.tilt("down")
 
 	grid.printGrid()
 	
@@ -167,14 +175,17 @@ def main():
 	
 	grid.printGrid()
 	
-	grid = grid.tilt("left")
+	grid.tilt("left")
 
 	grid.printGrid()
 
-	grid = grid.tilt("right")
+	grid.tilt("right")
 
 	grid.printGrid()
-	
+
+	grid.clearGrid()
+
+	grid.printGrid()
 
 if __name__ == "__main__":
 	main()
