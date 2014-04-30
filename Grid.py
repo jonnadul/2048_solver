@@ -96,6 +96,8 @@ class Grid:
 		else:
 			return False
 		
+		noMovement = True
+
 		for i in range(i_start, i_stop, i_step):
 			for j in range(j_start, j_stop, j_step):
 				if (self.__grid[i][j] != 0):
@@ -113,12 +115,14 @@ class Grid:
 						if (self.__grid[next_i][next_j] == 0):
 							self.__grid[next_i][next_j] = self.__grid[curr_i][curr_j]
 							self.__grid[curr_i][curr_j] = 0
+							noMovement = False
 
 						elif (self.__grid[next_i][next_j] ==
 								self.__grid[curr_i][curr_j]):
 							self.__grid[next_i][next_j] = (self.__grid[curr_i][curr_j] * -2)
 							self.__grid[curr_i][curr_j] = 0
 							done = True
+							noMovement = False
 
 						else:
 							self.setGrid(self.__grid)
@@ -130,11 +134,14 @@ class Grid:
 
 							next_i = curr_i + i_inc
 							next_j = curr_j + j_inc
-		
+
+		# Reverting all negatives
 		for i in range(GRID_SIZE):
 			for j in range(GRID_SIZE):
 				if (self.__grid[i][j] < 0):
 					self.__grid[i][j] = self.__grid[i][j] * -1
+
+		return noMovement
 
 	# Prints Grid
 	def printGrid(self):

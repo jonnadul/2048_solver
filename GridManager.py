@@ -23,7 +23,9 @@ class GridManager:
 
 			self.__grid.printGrid()
 
-			self.__userPlayer.makeMove(self.__grid)
+			validMove = False
+			while(not validMove):
+				validMove = not (self.__userPlayer.makeMove(self.__grid))
 
 		if (self.__grid.isFull()):
 			print "User Lost!"
