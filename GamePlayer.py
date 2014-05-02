@@ -1,8 +1,6 @@
 from Grid import Grid
 from random import Random
 
-GRID_SIZE = 4
-
 class GamePlayer:
 	# Constructor
 	def __init__(self):
@@ -17,8 +15,8 @@ class GamePlayer:
 			done = False
 
 			while(not done):
-				i = self.__rand.randint(0, GRID_SIZE-1)
-				j = self.__rand.randint(0, GRID_SIZE-1)
+				i = self.__rand.randint(0, grid.getGridSize()-1)
+				j = self.__rand.randint(0, grid.getGridSize()-1)
 				val = self.__rand.randint(1, 2)
 				
 				done = grid.addTile((val*2), i, j)

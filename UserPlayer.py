@@ -1,7 +1,5 @@
 from Grid import Grid
 
-GRID_SIZE = 4
-
 class UserPlayer:
 	# Performs a move on behalf
 	# of the user, currently

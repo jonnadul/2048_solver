@@ -1,18 +1,17 @@
 import copy
 import math
 
-GRID_SIZE = 4
-
 class Grid:
 	# Constructor
 	def __init__(self):
-		self.__grid = [[0 for i in range(GRID_SIZE)] for j in range(GRID_SIZE)]
+		self.__gridSize = 4
+		self.__grid = [[0 for i in range(self.__gridSize)] for j in range(self.__gridSize)]
 
 	# Adds a new tile at
 	# row i, col j
 	def addTile(self, tileValue, i, j):
-		if (((i >= 0) and (i < GRID_SIZE)) and
-			((j >= 0) and (j < GRID_SIZE)) and
+		if (((i >= 0) and (i < self.__gridSize)) and
+			((j >= 0) and (j < self.__gridSize)) and
 			(self.__grid[i][j] == 0)):
 			self.__grid[i][j] = tileValue
 			return True 
@@ -20,11 +19,15 @@ class Grid:
 			return False
 
 	def clearGrid(self):
-		self.__grid = [[0 for i in range(GRID_SIZE)] for j in range(GRID_SIZE)]
+		self.__grid = [[0 for i in range(self.__gridSize)] for j in range(self.__gridSize)]
 
 	# Returns the private grid variable
 	def getGrid(self):
 		return self.__grid
+
+	# Returns the private gridSize variable
+	def getGridSize(self):
+		return self.__gridSize
 
 	# Sets the private grid variable
 	def setGrid(self, grid):
@@ -33,8 +36,8 @@ class Grid:
 	# Checks if a certain value is in
 	# the grid
 	def gridContains(self, value):
-		for i in range(GRID_SIZE):
-			for j in range(GRID_SIZE):
+		for i in range(self.__gridSize):
+			for j in range(self.__gridSize):
 				if (self.__grid[i][j] == value):
 					return True
 
@@ -42,8 +45,8 @@ class Grid:
 
 	# Checks if the grid is full
 	def isFull(self):
-		for i in range(GRID_SIZE):
-			for j in range(GRID_SIZE):
+		for i in range(self.__gridSize):
+			for j in range(self.__gridSize):
 				if (self.__grid[i][j] == 0):
 					return False
 		return True
@@ -54,42 +57,42 @@ class Grid:
 		if (direction == "up"):
 			i_inc = -1
 			i_start = 0
-			i_stop = GRID_SIZE
+			i_stop = self.__gridSize
 			i_step = 1
 			
 			j_inc = 0
 			j_start = 0
-			j_stop = GRID_SIZE
+			j_stop = self.__gridSize
 			j_step = 1
 		elif (direction == "right"):
 			i_inc = 0
 			i_start = 0
-			i_stop = GRID_SIZE
+			i_stop = self.__gridSize
 			i_step = 1
 			
 			j_inc = 1
-			j_start = GRID_SIZE-1
+			j_start = self.__gridSize-1
 			j_stop = -1
 			j_step = -1
 		elif (direction == "down"):
 			i_inc = 1
-			i_start = GRID_SIZE-1
+			i_start = self.__gridSize-1
 			i_stop = -1
 			i_step = -1
 			
 			j_inc = 0
 			j_start = 0
-			j_stop = GRID_SIZE
+			j_stop = self.__gridSize
 			j_step = 1
 		elif (direction == "left"):
 			i_inc = 0
 			i_start = 0
-			i_stop = GRID_SIZE
+			i_stop = self.__gridSize
 			i_step = 1
 			
 			j_inc = -1
 			j_start = 0
-			j_stop = GRID_SIZE
+			j_stop = self.__gridSize
 			j_step = 1
 		else:
 			return False
@@ -107,8 +110,8 @@ class Grid:
 
 					done = False
 					while ((not done) and
-						((next_i >= 0) and (next_i < GRID_SIZE)) and
-						((next_j >= 0) and (next_j < GRID_SIZE))):
+						((next_i >= 0) and (next_i < self.__gridSize)) and
+						((next_j >= 0) and (next_j < self.__gridSize))):
 
 						if (self.__grid[next_i][next_j] == 0):
 							self.__grid[next_i][next_j] = self.__grid[curr_i][curr_j]
@@ -136,8 +139,8 @@ class Grid:
 							next_j = curr_j + j_inc
 
 		# Reverting all negatives
-		for i in range(GRID_SIZE):
-			for j in range(GRID_SIZE):
+		for i in range(self.__gridSize):
+			for j in range(self.__gridSize):
 				if (self.__grid[i][j] < 0):
 					self.__grid[i][j] = self.__grid[i][j] * -1
 
@@ -146,8 +149,8 @@ class Grid:
 	# Prints Grid
 	def printGrid(self):
 		printStr = ""
-		for i in range(GRID_SIZE):
-			for j in range(GRID_SIZE):
+		for i in range(self.__gridSize):
+			for j in range(self.__gridSize):
 				printStr += str(self.__grid[i][j]) + "\t"
 			print printStr
 			printStr = ""
@@ -155,8 +158,8 @@ class Grid:
 
 	def printGridThis(self, grid):
 		printStr = ""
-		for i in range(GRID_SIZE):
-			for j in range(GRID_SIZE):
+		for i in range(self.__gridSize):
+			for j in range(self.__gridSize):
 				printStr += str(grid[i][j]) + "\t"
 			print printStr
 			printStr = ""
