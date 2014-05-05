@@ -10,7 +10,7 @@ class Grid:
 	# Adds a new tile at
 	# row i, col j
 	def addTile(self, tileValue, i, j):
-		if (((i >= 0) and (i < self.__gridSize)) and
+        	if (((i >= 0) and (i < self.__gridSize)) and
 			((j >= 0) and (j < self.__gridSize)) and
 			(self.__grid[i][j] == 0)):
 			self.__grid[i][j] = tileValue
@@ -96,8 +96,10 @@ class Grid:
 			j_step = 1
 		else:
 			return False
-		
-		noMovement = True
+	
+		# Start off assuming no movements will
+		# happen
+		movement = False
 
 		for i in range(i_start, i_stop, i_step):
 			for j in range(j_start, j_stop, j_step):
@@ -116,7 +118,7 @@ class Grid:
 						if (self.__grid[next_i][next_j] == 0):
 							self.__grid[next_i][next_j] = self.__grid[curr_i][curr_j]
 							self.__grid[curr_i][curr_j] = 0
-							noMovement = False
+							movement = True
 
 						elif (self.__grid[next_i][next_j] ==
 								self.__grid[curr_i][curr_j]):
@@ -125,7 +127,7 @@ class Grid:
 							self.__grid[next_i][next_j] = (self.__grid[curr_i][curr_j] * -2)
 							self.__grid[curr_i][curr_j] = 0
 							done = True
-							noMovement = False
+							movement = True
 
 						else:
 							self.setGrid(self.__grid)
@@ -144,7 +146,7 @@ class Grid:
 				if (self.__grid[i][j] < 0):
 					self.__grid[i][j] = self.__grid[i][j] * -1
 
-		return noMovement
+		return movement
 
 	# Prints Grid
 	def printGrid(self):
@@ -164,8 +166,7 @@ class Grid:
 			print printStr
 			printStr = ""
 		print ""
-
-''' Test code
+'''
 def main():
 	grid = Grid()
 
