@@ -54,6 +54,11 @@ class Grid:
 	# Returns a copy of the Grid Class in the
 	# indicated tilt direction
 	def tilt(self, direction):
+		# Assume no movements and score is
+		# zero at beginning
+		movement = False
+		score = 0
+
 		if (direction == "up"):
 			i_inc = -1
 			i_start = 0
@@ -94,12 +99,8 @@ class Grid:
 			j_start = 0
 			j_stop = self.__gridSize
 			j_step = 1
-		else:
-			return False
-	
-		# Start off assuming no movements will
-		# happen
-		movement = False
+		else:	
+			return (movement, score)
 
 		for i in range(i_start, i_stop, i_step):
 			for j in range(j_start, j_stop, j_step):
@@ -128,7 +129,7 @@ class Grid:
 							self.__grid[curr_i][curr_j] = 0
 							done = True
 							movement = True
-
+							score += (-1 * self.__grid[next_i][next_j])
 						else:
 							self.setGrid(self.__grid)
 							done = True
@@ -146,7 +147,7 @@ class Grid:
 				if (self.__grid[i][j] < 0):
 					self.__grid[i][j] = self.__grid[i][j] * -1
 
-		return movement
+		return (movement, score)
 
 	# Prints Grid
 	def printGrid(self):
@@ -166,7 +167,7 @@ class Grid:
 			print printStr
 			printStr = ""
 		print ""
-'''
+
 def main():
 	grid = Grid()
 
@@ -176,14 +177,19 @@ def main():
 
 	grid.printGrid()
 
-	grid.tilt("up")
+	valud = grid.tilt("up")
+	
+	if (valud[0] == True):
+		print "score = " + str(valud[1])
 	
 	grid.printGrid()
 
-	grid.tilt("up")
+	valud = grid.tilt("up")
+	
+	if (valud[0] == True):
+		print "score = " + str(valud[1])
 	
 	grid.printGrid()
 
 if __name__ == "__main__":
 	main()
-'''

@@ -1,14 +1,23 @@
 from Grid import Grid
 
 class UserPlayer:
+	def __init__(self):
+		self.score = 0
+	
 	# Performs a move on behalf
 	# of the user, currently
 	# prompts for a tile direction
 	# and performs it.
 	def makeMove(self, grid):
 		direction = raw_input("up, down, left, right?: ")
-		return grid.tilt(direction)
+		result = grid.tilt(direction)
 
+		if (result[0] == True):
+			self.score += result[1]
+			print "Current score = " + str(self.score)
+
+		return result[0]
+			
 ''' Test Code
 def main():
 	grid = Grid()
