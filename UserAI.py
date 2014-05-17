@@ -21,17 +21,26 @@ class UserAI:
                         userUpMove = copy.deepcopy(curGrid)
                         userDownMove = copy.deepcopy(curGrid)
 
-			if (userLeftMove.tilt("left") == True):
-				gridNode.addChildGrid(userLeftMove)
+			resultLeft = userLeftMove.tilt("left")
+			resultRight = userRightMove.tilt("right")
+			resultUp = userUpMove.tilt("up")
+			resultDown = userDownMove.tilt("down")
+			
+			if (resultLeft[0] == True):
+				gridNode.addChildGrid(userLeftMove,
+						gridNode.getScore() + resultLeft[1])
 
-			if (userRightMove.tilt("right") == True):
-                        	gridNode.addChildGrid(userRightMove)
+			if (resultRight[0] == True):
+                        	gridNode.addChildGrid(userRightMove,
+						gridNode.getScore() + resultRight[1])
                         
-			if (userUpMove.tilt("up") == True):
-                        	gridNode.addChildGrid(userUpMove)
+			if (resultUp[0] == True):
+                        	gridNode.addChildGrid(userUpMove,
+						gridNode.getScore() + resultUp[1])
                         
-			if (userDownMove.tilt("down") == True):
-                        	gridNode.addChildGrid(userDownMove)
+			if (resultDown[0] == True):
+                        	gridNode.addChildGrid(userDownMove,
+						gridNode.getScore() + resultDown[1])
 
                 else:
 			# Adds all permutation of 2, 4 tiles at
@@ -42,7 +51,8 @@ class UserAI:
                                                 gameMove = copy.deepcopy(curGrid)
 
                                                 if (gameMove.addTile(val*2, i, j) == True):
-                                                        gridNode.addChildGrid(gameMove)
+                                                        gridNode.addChildGrid(gameMove,
+									gridNode.getScore())
 
 		# Recursive calls the helper function on all
 		# generated child nodes
@@ -66,6 +76,7 @@ class UserAI:
 def traversalHelper(gridNode, depth):
 	print "GridNode, depth = " + str(depth)
 	gridNode.getGrid().printGrid()
+	print "score = " + str(gridNode.getScore())
 
 	for i in range(gridNode.getNumOfChildNodes()):
 		traversalHelper(gridNode.getChildNodeAt(i), depth+1)
