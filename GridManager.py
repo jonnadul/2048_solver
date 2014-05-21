@@ -17,8 +17,7 @@ class GridManager:
 		# Grid is Full (which is a loss)
 		# or a 2048 tile is encountered
 		# (which is a win)
-		while ((not self.__grid.isFull()) and
-			(not self.__grid.gridContains(2048))):
+		while (not self.__grid.gridContains(2048)):
 			self.__gamePlayer.makeMove(self.__grid)
 
 			self.__grid.printGrid()

@@ -110,7 +110,18 @@ class UserAI:
 		return self.__miniMaxTraversalHelper__(gridNode, depth, False)
 
 	def decisionMaker(self, grid):
-				
+		gridNode = self.generateGameTree(grid, 5)
+	
+		bestValue = -1 * BIG_NUMBER - 1
+
+		for i in range(gridNode.getNumOfChildNodes()):
+			hu_val = self.miniMaxTraversal(gridNode.getChildNodeAt(i), 3)
+			
+			if (hu_val > bestValue):
+				grid.setGrid(((gridNode.getChildNodeAt(i)).getGrid()).getGrid())
+				print "Making following move:"
+				grid.printGrid()
+				bestValue = hu_val
 
 def traversalHelper(gridNode, depth):
 	print "GridNode, depth = " + str(depth)

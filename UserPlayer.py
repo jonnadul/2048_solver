@@ -1,4 +1,5 @@
 from Grid import Grid
+from UserAI import UserAI
 
 class UserPlayer:
 	def __init__(self):
@@ -20,7 +21,7 @@ class UserPlayer:
 
 		return result[0]'''
 		
-		userAI.decisionMaker(grid)
+		self.userAI.decisionMaker(grid)
 
 		return True
 			

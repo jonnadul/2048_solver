@@ -1,5 +1,6 @@
 import copy
 import math
+import copy
 
 class Grid:
 	# Constructor
@@ -20,6 +21,12 @@ class Grid:
 
 	def clearGrid(self):
 		self.__grid = [[0 for i in range(self.__gridSize)] for j in range(self.__gridSize)]
+
+	# Sets the grid
+	def setGrid(self, grid):
+		for i in range(self.__gridSize):
+			for j in range(self.__gridSize):
+				self.__grid[i][j] = grid[i][j]
 
 	# Returns the private grid variable
 	def getGrid(self):
