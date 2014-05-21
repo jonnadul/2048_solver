@@ -1,6 +1,9 @@
+import sys
 import copy
 from GridNode import GridNode
 from Grid import Grid
+
+BIG_NUMBER = sys.maxint
 
 class UserAI:
 	# Internal helper function to facilitate
@@ -73,6 +76,42 @@ class UserAI:
 
 		return gridNode
 
+	def __miniMaxTraversalHelper__(self, gridNode, depth, maximizingPlayer):
+		if ((depth == 0) or
+			(gridNode.getNumOfChildNodes() == 0)):
+			return gridNode.getScore()
+		
+		if (maximizingPlayer == True):
+			bestValue = -1 * BIG_NUMBER - 1
+			
+			for i in range(gridNode.getNumOfChildNodes()):
+				val = self.__miniMaxTraversalHelper__(gridNode.getChildNodeAt(i),
+							depth-1,
+							False)
+
+				if (val > bestValue):
+					bestValue = val
+			
+			return bestValue
+		elif (maximizingPlayer == False):
+			bestValue = BIG_NUMBER
+
+			for i in range(gridNode.getNumOfChildNodes()):
+				val = self.__miniMaxTraversalHelper__(gridNode.getChildNodeAt(i),
+							depth-1,
+							True)
+
+				if (val < bestValue):
+					bestValue = val
+			
+			return bestValue
+
+	def miniMaxTraversal(self, gridNode, depth):
+		return self.__miniMaxTraversalHelper__(gridNode, depth, False)
+
+	def decisionMaker(self, grid):
+				
+
 def traversalHelper(gridNode, depth):
 	print "GridNode, depth = " + str(depth)
 	gridNode.getGrid().printGrid()
@@ -89,9 +128,17 @@ def main():
 	grid.addTile(2, 1, 0)
 	grid.addTile(4, 3, 0)
 
+	print "About to generateGameTree"
 	gridNode = userAI.generateGameTree(grid, 5)
 
-	traversalHelper(gridNode, 0)
+	'''traversalHelper(gridNode, 0)'''
 
+	print "num of childnodes = " + str(gridNode.getNumOfChildNodes())
+
+	for i in range(gridNode.getNumOfChildNodes()):
+		hu_val = userAI.miniMaxTraversal(gridNode.getChildNodeAt(i), 3)
+
+		print "Heuristic value for child " + str(i) + " is " + str(hu_val)
+	
 if __name__ == "__main__":
 	main()
