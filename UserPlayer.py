@@ -4,25 +4,16 @@ from UserAI import UserAI
 class UserPlayer:
 	def __init__(self):
 		self.userAI = UserAI()
-		self.score = 0
 	
 	# Performs a move on behalf
 	# of the user, currently
 	# prompts for a tile direction
 	# and performs it.
 	def makeMove(self, grid):
-		'''direction = raw_input("up, down, left, right?: ")
-
-		result = grid.tilt(direction)
-
-		if (result[0] == True):
-			self.score += result[1]
-			print "Current score = " + str(self.score)
-
-		return result[0]'''
-		
 		self.userAI.decisionMaker(grid)
 
+		# AI takes cares of avoiding illegal
+		# moves
 		return True
 			
 ''' Test Code
