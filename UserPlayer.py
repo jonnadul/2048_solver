@@ -10,11 +10,7 @@ class UserPlayer:
 	# prompts for a tile direction
 	# and performs it.
 	def makeMove(self, grid):
-		self.userAI.decisionMaker(grid)
-
-		# AI takes cares of avoiding illegal
-		# moves
-		return True
+		return self.userAI.decisionMaker(grid)
 			
 ''' Test Code
 def main():

@@ -22,13 +22,11 @@ class GridManager:
 
 			self.__grid.printGrid()
 
-			validMove = False
-			while(not validMove):
-				validMove = self.__userPlayer.makeMove(self.__grid)
+			if (not self.__userPlayer.makeMove(self.__grid)):
+				print "User Lost!"
+				break
 
-		if (self.__grid.isFull()):
-			print "User Lost!"
-		elif (self.__grid.gridContains(2048)):
+		if (self.__grid.gridContains(2048)):
 			print "User Won!"
 
 def main():

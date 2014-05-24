@@ -74,14 +74,13 @@ class UserAI:
 
 		return gridNode
 
-	def __miniMaxTraversalHelper__(self, gridNode, depth, maximizingPlayer):
+	def __miniMaxTraversalHelper__(self, gridNode, depth, alpha, beta, maximizingPlayer):
 		if ((depth == 0) or
 			(gridNode.getNumOfChildNodes() == 0)):
-			return gridNode.getScore()
+			return (gridNode.getScore() +
+					gridNode.getGrid().getHeuristic())
 		
 		if (maximizingPlayer == True):
-			bestValue = -1 * BIG_NUMBER - 1
-			
 			for i in range(gridNode.getNumOfChildNodes()):
 			
 				childGridNode = self.generateGameTree(False,
@@ -90,14 +89,19 @@ class UserAI:
 
 				val = self.__miniMaxTraversalHelper__(childGridNode,
 							depth-1,
+							alpha,
+							beta,
 							False)
 
-				if (val > bestValue):
-					bestValue = val
-			
-			return bestValue
+				if (val > alpha):
+					alpha = val
+				
+				if (beta <= alpha):
+					break
+
+			return alpha
+
 		elif (maximizingPlayer == False):
-			bestValue = BIG_NUMBER
 
 			for i in range(gridNode.getNumOfChildNodes()):
 				
@@ -107,24 +111,37 @@ class UserAI:
 
 				val = self.__miniMaxTraversalHelper__(childGridNode,
 							depth-1,
+							alpha,
+							beta,
 							True)
 
-				if (val < bestValue):
-					bestValue = val
+				if (val < beta):
+					beta = val
 			
+				if (beta <= alpha):
+					break
+
 			return bestValue
 
 	def miniMaxTraversal(self, gridNode, depth):
-		return self.__miniMaxTraversalHelper__(gridNode, depth, False)
+		return self.__miniMaxTraversalHelper__(gridNode,
+					depth,
+					(-1 * BIG_NUMBER - 1),
+					BIG_NUMBER,
+					False)
 
 	def decisionMaker(self, grid):
 		gridNode = self.generateGameTree(True, grid, 1)
 
 		bestValue = -1 * BIG_NUMBER - 1
 
+		if (gridNode.getNumOfChildNodes() == 0):
+			return False
+
 		for i in range(gridNode.getNumOfChildNodes()):
-			hu_val = self.miniMaxTraversal(gridNode.getChildNodeAt(i), 150)
-			
+			hu_val = self.miniMaxTraversal(gridNode.getChildNodeAt(i), 8)
+	
+			print "hu_val = " + str(hu_val)
 			if (hu_val > bestValue):
 				grid.setGrid(((gridNode.getChildNodeAt(i)).getGrid()).getGrid())
 				bestValue = hu_val
@@ -132,6 +149,7 @@ class UserAI:
 		print "Making following move:"
 		grid.printGrid()
 		#time.sleep(1)
+		return True
 
 def traversalHelper(gridNode, depth):
 	print "GridNode, depth = " + str(depth)

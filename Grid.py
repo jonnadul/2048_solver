@@ -32,6 +32,24 @@ class Grid:
 	def getGrid(self):
 		return self.__grid
 
+	# Returns number of open spaces
+	def numOfTilesOf(self, number):
+		count = 0
+		for i in range(self.__gridSize):
+			for j in range(self.__gridSize):
+				if (self.__grid[i][j] == number):
+					count += 1
+
+		return count
+
+	def getHeuristic(self):
+		total = 0
+		for i in range(self.__gridSize):
+			for j in range(self.__gridSize):
+				total += self.__grid[i][j]
+		
+		return total
+
 	# Returns the private gridSize variable
 	def getGridSize(self):
 		return self.__gridSize
